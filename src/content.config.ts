@@ -72,6 +72,7 @@ const sponsors = defineCollection({
     logo: z.string(),
     url: z.string().url(),
     tier: z.enum(["gold", "silver", "bronze"]),
+    bgColor: z.string().optional(),
   }),
 });
 

@@ -34,7 +34,12 @@ const tiers = [
           <div class:list={["SponsorsGrid", key]}>
             {sponsors.map((sponsor) => (
               <a href={sponsor.data.url} target="_blank" class="SponsorsGrid-item">
-                <img src={sponsor.data.logo} alt={sponsor.data.name} loading="lazy" />
+                <span
+                  class:list={["SponsorsGrid-logoWrap", { _hasBg: sponsor.data.bgColor }]}
+                  style={sponsor.data.bgColor ? `background-color: ${sponsor.data.bgColor}` : undefined}
+                >
+                  <img src={sponsor.data.logo} alt={sponsor.data.name} loading="lazy" />
+                </span>
                 <span>{sponsor.data.name}</span>
               </a>
             ))}
@@ -95,6 +100,17 @@ const tiers = [
 
   .SponsorsGrid-item img {
     object-fit: contain;
+  }
+
+  .SponsorsGrid-logoWrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .SponsorsGrid-logoWrap._hasBg {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm, 8px);
   }
 
   .SponsorsGrid.gold img {

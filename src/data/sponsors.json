@@ -7,6 +7,13 @@
     "tier": "gold"
   },
   {
+    "id": "actilium-deepthought",
+    "name": "Actilium & Deepthought Solutions",
+    "logo": "/images/sponsors/actilium-deepthought.webp",
+    "url": "https://deepthought-solutions.com/",
+    "tier": "gold"
+  },
+  {
     "id": "normandie-numerique",
     "name": "Normandie Numérique",
     "logo": "/images/sponsors/normandie-numerique.webp",
@@ -68,5 +75,13 @@
     "logo": "/images/sponsors/le-village-by-ca.svg",
     "url": "https://normandie.levillagebyca.com/",
     "tier": "bronze"
+  },
+  {
+    "id": "shodo",
+    "name": "Shodo",
+    "logo": "/images/sponsors/shodo.svg",
+    "url": "https://www.shodo.io",
+    "tier": "bronze",
+    "bgColor": "#ee2148"
   }
 ]

@@ -163,8 +163,8 @@ const OUVERTURE_DES_PORTES = {
   title: "Ouverture des portes — Accueil café",
   description: "",
   speakerIds: [],
-  startTime: `${EVENT_DATE}T08:00:00`,
-  endTime: `${EVENT_DATE}T09:00:00`,
+  startTime: `${EVENT_DATE}T08:00:00.000+02:00`,
+  endTime: `${EVENT_DATE}T09:00:00.000+02:00`,
   roomId: "all",
   theme: "Networking",
   level: "débutant",
@@ -243,51 +243,31 @@ program.sort((a, b) => {
 const LUNCH_THRESHOLD_MIN = 60;
 const BREAK_THRESHOLD_MIN = 15;
 
-// Collect all end times and next start times
-const allEndTimes = program.map((p) => new Date(p.endTime).getTime());
-const allStartTimes = program.map((p) => new Date(p.startTime).getTime());
-const latestEndBySlot = new Map();
-const earliestStartBySlot = new Map();
-
-for (const p of program) {
-  const end = new Date(p.endTime).getTime();
-  const start = new Date(p.startTime).getTime();
-  const endKey = p.startTime;
-  if (!latestEndBySlot.has(endKey) || end > latestEndBySlot.get(endKey)) {
-    latestEndBySlot.set(endKey, end);
-  }
-}
-
 // Get unique sorted start times
 const uniqueStarts = [...new Set(program.map((p) => p.startTime))].sort();
 
 for (let i = 0; i < uniqueStarts.length - 1; i++) {
-  // Latest end time for current slot
-  const currentSlotEnd = Math.max(
-    ...program
-      .filter((p) => p.startTime === uniqueStarts[i])
-      .map((p) => new Date(p.endTime).getTime()),
-  );
-  const nextSlotStart = new Date(uniqueStarts[i + 1]).getTime();
-  const gapMin = (nextSlotStart - currentSlotEnd) / 60000;
+  // Latest endTime string for current slot — preserve original timezone offset
+  const currentSlotEndStr = program
+    .filter((p) => p.startTime === uniqueStarts[i])
+    .map((p) => p.endTime)
+    .sort()
+    .pop();
+  const nextSlotStartStr = uniqueStarts[i + 1];
+  const gapMin =
+    (new Date(nextSlotStartStr).getTime() - new Date(currentSlotEndStr).getTime()) / 60000;
 
   if (gapMin >= BREAK_THRESHOLD_MIN) {
-    const breakStart = new Date(currentSlotEnd);
-    const breakEnd = new Date(nextSlotStart);
-    const pad = (n) => String(n).padStart(2, "0");
-    const fmt = (d) =>
-      `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
     const isLunch = gapMin >= LUNCH_THRESHOLD_MIN;
+    const idTime = currentSlotEndStr.slice(11, 16).replace(":", "h");
 
     program.push({
-      id: isLunch ? "pause-dejeuner" : `pause-${fmt(breakStart).slice(11, 16).replace(":", "h")}`,
+      id: isLunch ? "pause-dejeuner" : `pause-${idTime}`,
       title: isLunch ? "Pause déjeuner" : "Pause",
-      description: isLunch
-        ? "Buffet et networking."
-        : "",
+      description: isLunch ? "Buffet et networking." : "",
       speakerIds: [],
-      startTime: fmt(breakStart),
-      endTime: fmt(breakEnd),
+      startTime: currentSlotEndStr,
+      endTime: nextSlotStartStr,
       roomId: "all",
       theme: "Networking",
       level: "débutant",

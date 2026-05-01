@@ -184,15 +184,19 @@ const roomsJson = JSON.stringify(
       const params = new URLSearchParams(window.location.search);
       const activeSalle = params.get("salle") || "conference";
 
-      // Compare only hours/minutes so the page works on any day
+      // Compare only hours/minutes so the page works on any day.
+      // Recomputed on every read so the page reflects the current time
+      // without needing a reload.
       const heureParam = params.get("heure");
-      let nowMinutes;
+      let fixedNowMinutes = null;
       if (heureParam) {
         const [h, m] = heureParam.split(":").map(Number);
-        nowMinutes = h * 60 + m;
-      } else {
+        fixedNowMinutes = h * 60 + m;
+      }
+      function getNowMinutes() {
+        if (fixedNowMinutes !== null) return fixedNowMinutes;
         const now = new Date();
-        nowMinutes = now.getHours() * 60 + now.getMinutes();
+        return now.getHours() * 60 + now.getMinutes();
       }
 
       function toMinutes(item) {
@@ -210,17 +214,18 @@ const roomsJson = JSON.stringify(
 
       function isCurrentItem(item) {
         const { startMin, endMin } = toMinutes(item);
-        return nowMinutes >= startMin && nowMinutes < endMin;
+        const now = getNowMinutes();
+        return now >= startMin && now < endMin;
       }
 
       function isPastItem(item) {
         const { endMin } = toMinutes(item);
-        return nowMinutes >= endMin;
+        return getNowMinutes() >= endMin;
       }
 
       function isFutureItem(item) {
         const { startMin } = toMinutes(item);
-        return nowMinutes < startMin;
+        return getNowMinutes() < startMin;
       }
 
       // Keep only the last N past items + up to keepFuture upcoming items
@@ -452,7 +457,13 @@ const roomsJson = JSON.stringify(
       let currentIndex = 0;
       const INTERVAL = 10000; // 10s per slide
 
+      function rerender() {
+        buildProgramme();
+        buildSession();
+      }
+
       function showSlide(index) {
+        rerender();
         slides.forEach((s, i) => {
           s.hidden = i !== index;
         });
@@ -465,14 +476,16 @@ const roomsJson = JSON.stringify(
       }
 
       // Init
-      buildProgramme();
-      buildSession();
+      rerender();
 
       slides.forEach((s, i) => {
         s.hidden = i !== 0;
       });
 
       let timer = setInterval(nextSlide, INTERVAL);
+      // Safety net: re-render every 30s so a hidden slide stays fresh
+      // even if the rotation is paused.
+      setInterval(rerender, 30000);
 
       // Manual pip click
       pips.forEach((pip, i) => {

@@ -292,7 +292,7 @@ const roomsJson = JSON.stringify(
                 (a, b) =>
                   new Date(a.startTime).getTime() - new Date(b.startTime).getTime(),
               );
-            const visible = trimPastItems(items, 1, 11);
+            const visible = trimPastItems(items, 1, 7);
             tvHtml += '<section class="Programme-main">';
             tvHtml +=
               '<div class="Programme-roomHeader">' +
@@ -355,7 +355,7 @@ const roomsJson = JSON.stringify(
             '<div class="Programme-roomLine"></div>' +
             "</div>";
           html += '<div class="Programme-items is-secondary">';
-          for (const item of trimPastItems(items, 1, 11)) {
+          for (const item of trimPastItems(items, 1, 7)) {
             html += renderProgrammeItem(item, true);
           }
           html += "</div></section>";
@@ -709,7 +709,7 @@ const roomsJson = JSON.stringify(
       }
 
       .Programme-roomName {
-        font-size: 1.6rem;
+        font-size: 1.9rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: -0.01em;
@@ -717,7 +717,7 @@ const roomsJson = JSON.stringify(
       }
 
       .Programme-roomName.is-secondary {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         font-weight: 700;
         color: rgba(27, 27, 27, 0.6);
       }
@@ -777,18 +777,18 @@ const roomsJson = JSON.stringify(
       .Programme-item.is-break .Programme-itemTitle {
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        font-size: 0.85rem;
+        font-size: 1rem;
       }
 
       .Programme-item.is-break .Programme-itemTime {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
 
       .Programme-itemTime {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: rgba(27, 27, 27, 0.35);
-        min-width: 80px;
+        min-width: 90px;
       }
 
       .Programme-itemBody {
@@ -796,21 +796,21 @@ const roomsJson = JSON.stringify(
       }
 
       .Programme-itemTitle {
-        font-size: 1.15rem;
+        font-size: 1.5rem;
         font-weight: 800;
-        line-height: 1.3;
+        line-height: 1.25;
       }
 
       .Programme-itemTitle.is-secondary {
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight: 700;
       }
 
       .Programme-itemSpeakers {
-        font-size: 0.85rem;
+        font-size: 1rem;
         font-weight: 500;
         color: rgba(27, 27, 27, 0.5);
-        margin-top: 2px;
+        margin-top: 4px;
       }
 
       .Programme-itemTag {
@@ -831,8 +831,8 @@ const roomsJson = JSON.stringify(
       }
 
       .Programme-itemTime.is-secondary {
-        font-size: 1rem;
-        min-width: 60px;
+        font-size: 1.2rem;
+        min-width: 70px;
         color: rgba(27, 27, 27, 0.25);
       }
 

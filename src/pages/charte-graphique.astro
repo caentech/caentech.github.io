@@ -1,0 +1,383 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const driveUrl =
+  "https://drive.google.com/drive/folders/1YSL1HeDE_TCMB9AJyw9ncNPR5QVoxic1?usp=sharing";
+
+const logos = [
+  {
+    src: "/images/logos/logo-noir-jaune-grande-dimension.png",
+    alt: "Logo Caen.Tech — version noir & jaune",
+    label: "Logo principal — noir & jaune",
+    download: "caentech-logo-noir-jaune.png",
+    background: "light",
+  },
+  {
+    src: "/images/logos/logo-fond-jaune.png",
+    alt: "Logo Caen.Tech — fond jaune",
+    label: "Logo sur fond jaune",
+    download: "caentech-logo-fond-jaune.png",
+    background: "yellow",
+  },
+];
+
+type ColorSwatch = {
+  hex: string;
+  cmyk: { c: number; m: number; y: number; k: number };
+  rgb: { r: number; g: number; b: number };
+  textOnSwatch: "light" | "dark";
+};
+
+const palette: ColorSwatch[] = [
+  { hex: "#ffdd00", cmyk: { c: 0, m: 10, y: 100, k: 0 }, rgb: { r: 255, g: 221, b: 0 }, textOnSwatch: "dark" },
+  { hex: "#85ccd5", cmyk: { c: 51, m: 0, y: 19, k: 0 }, rgb: { r: 133, g: 204, b: 213 }, textOnSwatch: "dark" },
+  { hex: "#8590c8", cmyk: { c: 54, m: 42, y: 0, k: 0 }, rgb: { r: 133, g: 144, b: 200 }, textOnSwatch: "dark" },
+  { hex: "#92c784", cmyk: { c: 50, m: 0, y: 60, k: 0 }, rgb: { r: 146, g: 199, b: 132 }, textOnSwatch: "dark" },
+  { hex: "#e85d5d", cmyk: { c: 2, m: 75, y: 56, k: 0 }, rgb: { r: 232, g: 93, b: 93 }, textOnSwatch: "light" },
+  { hex: "#c78fbf", cmyk: { c: 24, m: 52, y: 0, k: 0 }, rgb: { r: 199, g: 143, b: 191 }, textOnSwatch: "dark" },
+];
+---
+
+<BaseLayout
+  title="Charte graphique — Caen.Tech"
+  description="Logos, couleurs et typographie de Caen.Tech. Téléchargez les éléments officiels pour vos communications partenaires."
+>
+  <section class="Section">
+    <div class="Wrap">
+      <h1>Charte graphique</h1>
+      <p class="Section-intro">
+        Vous êtes partenaire, sponsor ou média&nbsp;? Cette page met à votre
+        disposition les éléments officiels de Caen.Tech&nbsp;: logos, palette
+        de couleurs et typographie, à utiliser dans vos communications.
+      </p>
+      <p class="Charte-cta">
+        <a class="Btn primary" href={driveUrl} target="_blank" rel="noopener">
+          Télécharger tous les éléments
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="Section alt">
+    <div class="Wrap">
+      <h2 class="Section-title">Logos</h2>
+      <p class="Section-intro">
+        Cliquez sur un logo pour le télécharger. Merci de respecter les
+        proportions et de ne pas modifier les couleurs.
+      </p>
+      <div class="Grid cols2 Charte-logos">
+        {logos.map((logo) => (
+          <a
+            class="Charte-logoCard"
+            href={logo.src}
+            download={logo.download}
+            data-bg={logo.background}
+          >
+            <div class="Charte-logoStage" data-bg={logo.background}>
+              <img src={logo.src} alt={logo.alt} loading="lazy" />
+            </div>
+            <div class="Charte-logoMeta">
+              <span class="Charte-logoLabel">{logo.label}</span>
+              <span class="Charte-logoDownload">Télécharger ↓</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="Section">
+    <div class="Wrap">
+      <h2 class="Section-title">Palette de couleurs</h2>
+      <p class="Section-intro">
+        Le jaune <code>#ffdd00</code> est la couleur principale. Les cinq teintes
+        secondaires sont utilisées comme accents (programme, sessions, sponsors).
+      </p>
+      <div class="Charte-palette">
+        {palette.map((color) => (
+          <article
+            class="Charte-swatch"
+            data-text={color.textOnSwatch}
+            style={`--swatch-bg: ${color.hex};`}
+          >
+            <div class="Charte-swatchValues">
+              <dl class="Charte-swatchCmyk">
+                <div><dt>C</dt><dd>{color.cmyk.c}%</dd></div>
+                <div><dt>M</dt><dd>{color.cmyk.m}%</dd></div>
+                <div><dt>Y</dt><dd>{color.cmyk.y}%</dd></div>
+                <div><dt>B</dt><dd>{color.cmyk.k}%</dd></div>
+              </dl>
+              <dl class="Charte-swatchRgb">
+                <div><dt>R</dt><dd>{color.rgb.r}</dd></div>
+                <div><dt>V</dt><dd>{color.rgb.g}</dd></div>
+                <div><dt>B</dt><dd>{color.rgb.b}</dd></div>
+              </dl>
+            </div>
+            <p class="Charte-swatchHex">{color.hex}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="Section alt">
+    <div class="Wrap">
+      <h2 class="Section-title">Typographie</h2>
+      <div class="Charte-font">
+        <p class="Charte-fontSample">
+          Les rencontres de l'écosystème tech caennais
+        </p>
+        <dl class="Charte-fontMeta">
+          <div><dt>Police</dt><dd>Arimo</dd></div>
+          <div>
+            <dt>Source</dt>
+            <dd>
+              <a
+                href="https://fonts.google.com/specimen/Arimo"
+                target="_blank"
+                rel="noopener"
+              >
+                Google Fonts
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="Section">
+    <div class="Wrap narrow Charte-finalCta">
+      <h2>Besoin d'autres éléments&nbsp;?</h2>
+      <p>
+        Tous les éléments (logos, palette, gabarits) sont rassemblés sur le
+        Drive partagé. Pour toute demande spécifique, contactez-nous.
+      </p>
+      <p class="Charte-cta">
+        <a class="Btn primary" href={driveUrl} target="_blank" rel="noopener">
+          Ouvrir le Drive partagé
+        </a>
+        <a class="Btn outline" href="mailto:contact@caen.tech">
+          Nous contacter
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <style>
+    /* Page-level Arimo for the typography demo */
+    @import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap");
+
+    .Charte-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    /* --- Logos --- */
+    .Charte-logos {
+      margin-top: var(--space-md);
+    }
+
+    .Charte-logoCard {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      text-decoration: none;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .Charte-logoCard:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .Charte-logoStage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl) var(--space-md);
+      min-height: 220px;
+    }
+
+    .Charte-logoStage[data-bg="yellow"] {
+      background-color: var(--color-primary);
+    }
+
+    .Charte-logoStage[data-bg="light"] {
+      background-color: var(--color-bg-alt);
+    }
+
+    .Charte-logoStage img {
+      max-height: 160px;
+      width: auto;
+    }
+
+    .Charte-logoMeta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .Charte-logoLabel {
+      font-weight: 600;
+      font-size: var(--text-sm);
+    }
+
+    .Charte-logoDownload {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+    }
+
+    /* --- Palette --- */
+    .Charte-palette {
+      display: grid;
+      gap: var(--space-md);
+      grid-template-columns: minmax(0, 1fr);
+      margin-top: var(--space-md);
+    }
+
+    @media (min-width: 640px) {
+      .Charte-palette {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .Charte-palette {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .Charte-swatch {
+      background-color: var(--swatch-bg);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-family: "Arimo", system-ui, sans-serif;
+    }
+
+    .Charte-swatch[data-text="dark"] {
+      color: #1a1a1a;
+    }
+
+    .Charte-swatch[data-text="light"] {
+      color: #ffffff;
+    }
+
+    .Charte-swatchValues {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm) var(--space-md);
+      font-size: var(--text-xs);
+      line-height: 1.5;
+    }
+
+    .Charte-swatchCmyk,
+    .Charte-swatchRgb {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .Charte-swatchCmyk div,
+    .Charte-swatchRgb div {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    .Charte-swatchCmyk dt,
+    .Charte-swatchRgb dt {
+      font-weight: 700;
+      min-width: 1.25em;
+    }
+
+    .Charte-swatchCmyk dd,
+    .Charte-swatchRgb dd {
+      margin: 0;
+    }
+
+    .Charte-swatchHex {
+      font-family: "Arimo", system-ui, monospace;
+      font-size: var(--text-base);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    /* --- Typography --- */
+    .Charte-font {
+      background-color: var(--color-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .Charte-fontSample {
+      font-family: "Arimo", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: var(--text-2xl);
+      line-height: 1.15;
+      color: var(--color-text);
+    }
+
+    .Charte-fontMeta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .Charte-fontMeta dt {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-xs);
+    }
+
+    .Charte-fontMeta dd {
+      margin: 0;
+      font-family: "Arimo", system-ui, sans-serif;
+      font-size: var(--text-base);
+      font-weight: 700;
+    }
+
+    .Charte-fontMeta a {
+      color: var(--color-text);
+      text-decoration: underline;
+    }
+
+    /* --- Final CTA --- */
+    .Charte-finalCta {
+      text-align: center;
+    }
+
+    .Charte-finalCta h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .Charte-finalCta p {
+      color: var(--color-text-light);
+    }
+
+    .Charte-finalCta .Charte-cta {
+      justify-content: center;
+      margin-top: var(--space-lg);
+    }
+  </style>
+</BaseLayout>

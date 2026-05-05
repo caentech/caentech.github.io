@@ -92,8 +92,7 @@ const roomsJson = JSON.stringify(
         </div>
       </main>
       <footer class="Interstice-footer">
-        <span class="Interstice-footerBrand">Caen.Tech</span>
-        <span class="Interstice-footerSub">&copy; 2026</span>
+        <span class="Interstice-footerTime" data-clock>--:--</span>
       </footer>
     </div>
 
@@ -132,8 +131,7 @@ const roomsJson = JSON.stringify(
         }
       </main>
       <footer class="Interstice-footer">
-        <span class="Interstice-footerBrand">Caen.Tech</span>
-        <span class="Interstice-footerSub">&copy; 2026</span>
+        <span class="Interstice-footerTime" data-clock>--:--</span>
       </footer>
     </div>
 
@@ -158,8 +156,7 @@ const roomsJson = JSON.stringify(
         </div>
       </main>
       <footer class="Interstice-footer">
-        <span class="Interstice-footerBrand">Caen.Tech</span>
-        <span class="Interstice-footerSub">&copy; 2026</span>
+        <span class="Interstice-footerTime" data-clock>--:--</span>
       </footer>
     </div>
 
@@ -471,9 +468,24 @@ const roomsJson = JSON.stringify(
       let currentIndex = 0;
       const INTERVAL = 10000; // 10s per slide
 
+      function formatNowTime() {
+        const total = ((getNowMinutes() % (24 * 60)) + 24 * 60) % (24 * 60);
+        const h = Math.floor(total / 60);
+        const m = total % 60;
+        return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+      }
+
+      function updateClock() {
+        const time = formatNowTime();
+        document.querySelectorAll("[data-clock]").forEach((el) => {
+          el.textContent = time;
+        });
+      }
+
       function rerender() {
         buildProgramme();
         buildSession();
+        updateClock();
       }
 
       function showSlide(index) {
@@ -505,6 +517,9 @@ const roomsJson = JSON.stringify(
       // Safety net: re-render every 30s so a hidden slide stays fresh
       // even if the rotation is paused.
       setInterval(rerender, 30000);
+      // Cheap clock refresh so the footer time stays in sync with the
+      // wall clock without waiting for a full rerender.
+      setInterval(updateClock, 10000);
 
       // Manual pip click
       pips.forEach((pip, i) => {
@@ -667,17 +682,12 @@ const roomsJson = JSON.stringify(
         margin-top: auto;
       }
 
-      .Interstice-footerBrand {
-        font-size: 0.65rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        color: #6d5e00;
-      }
-
-      .Interstice-footerSub {
-        font-size: 0.65rem;
-        color: rgba(27, 27, 27, 0.2);
+      .Interstice-footerTime {
+        font-variant-numeric: tabular-nums;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: rgba(27, 27, 27, 0.45);
       }
 
       /* === Pips === */

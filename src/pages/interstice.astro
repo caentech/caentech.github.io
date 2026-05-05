@@ -77,7 +77,9 @@ const roomsJson = JSON.stringify(
     <div class="Interstice-slide" data-slide="programme">
       <div class="Interstice-diagonal"></div>
       <header class="Interstice-header">
-        <div class="Interstice-logo">Caen.Tech<span>/</span></div>
+        <a class="Interstice-logo" href="/" aria-label="Caen.Tech">
+          <img src="/images/logos/logo-fond-jaune.png" alt="Caen.Tech" />
+        </a>
         <div class="Interstice-meta">9 juin 2026 — MoHo, Caen</div>
       </header>
       <main class="Interstice-content">
@@ -99,7 +101,9 @@ const roomsJson = JSON.stringify(
     <div class="Interstice-slide" data-slide="sponsors">
       <div class="Interstice-diagonal"></div>
       <header class="Interstice-header">
-        <div class="Interstice-logo">Caen.Tech<span>/</span></div>
+        <a class="Interstice-logo" href="/" aria-label="Caen.Tech">
+          <img src="/images/logos/logo-fond-jaune.png" alt="Caen.Tech" />
+        </a>
         <div class="Interstice-meta">9 juin 2026 — MoHo, Caen</div>
       </header>
       <main class="Interstice-content Sponsors-content">
@@ -137,7 +141,9 @@ const roomsJson = JSON.stringify(
     <div class="Interstice-slide" data-slide="session">
       <div class="Interstice-diagonal"></div>
       <header class="Interstice-header">
-        <div class="Interstice-logo">Caen.Tech<span>/</span></div>
+        <a class="Interstice-logo" href="/" aria-label="Caen.Tech">
+          <img src="/images/logos/logo-fond-jaune.png" alt="Caen.Tech" />
+        </a>
         <div class="Interstice-meta">9 juin 2026 — MoHo, Caen</div>
       </header>
       <main class="Interstice-content Session-content">
@@ -563,7 +569,7 @@ const roomsJson = JSON.stringify(
         inset: 0;
         width: 45%;
         height: 100%;
-        background: #ffd600;
+        background: #ffdd00;
         clip-path: polygon(0 0, 100% 0, 0 100%);
         z-index: 0;
       }
@@ -579,16 +585,14 @@ const roomsJson = JSON.stringify(
       }
 
       .Interstice-logo {
-        font-size: 1.8rem;
-        font-weight: 900;
-        letter-spacing: -0.03em;
-        text-transform: uppercase;
-        color: #1b1b1b;
+        display: block;
+        line-height: 0;
       }
 
-      .Interstice-logo span {
-        color: #ffd600;
-        font-weight: 900;
+      .Interstice-logo img {
+        display: block;
+        height: 110px;
+        width: auto;
       }
 
       .Interstice-meta {
@@ -645,7 +649,7 @@ const roomsJson = JSON.stringify(
 
       .Interstice-pip.is-active {
         width: 56px;
-        background: #ffd600;
+        background: #ffdd00;
       }
 
       /* === Content area === */
@@ -681,7 +685,7 @@ const roomsJson = JSON.stringify(
       .Programme-titleSlash {
         height: 16px;
         width: 180px;
-        background: #ffd600;
+        background: #ffdd00;
         transform: skewX(-12deg);
         margin-bottom: 8px;
       }
@@ -758,7 +762,7 @@ const roomsJson = JSON.stringify(
       }
 
       .Programme-item.is-current {
-        background: #ffd600;
+        background: #ffdd00;
         border-radius: 12px;
         border: 2px solid #1b1b1b;
       }
@@ -821,7 +825,7 @@ const roomsJson = JSON.stringify(
         padding: 4px 12px;
         border-radius: 999px;
         background: #1b1b1b;
-        color: #ffd600;
+        color: #ffdd00;
         white-space: nowrap;
       }
 
@@ -877,7 +881,7 @@ const roomsJson = JSON.stringify(
       .Sponsors-titleSlash {
         height: 12px;
         width: 140px;
-        background: #ffd600;
+        background: #ffdd00;
         transform: skewX(-12deg);
       }
 
@@ -955,7 +959,7 @@ const roomsJson = JSON.stringify(
       .Session-titleSlash {
         height: 12px;
         width: 140px;
-        background: #ffd600;
+        background: #ffdd00;
         transform: skewX(-12deg);
         margin-bottom: 56px;
       }
@@ -976,7 +980,7 @@ const roomsJson = JSON.stringify(
       }
 
       .Session-card.is-active {
-        border-left: 6px solid #ffd600;
+        border-left: 6px solid #ffdd00;
       }
 
       .Session-cardHeader {
@@ -1025,7 +1029,7 @@ const roomsJson = JSON.stringify(
         padding: 4px 12px;
         border-radius: 999px;
         background: #1b1b1b;
-        color: #ffd600;
+        color: #ffdd00;
       }
 
       .Session-empty[hidden] {

@@ -199,10 +199,18 @@ const roomsJson = JSON.stringify(
         const [h, m] = heureParam.split(":").map(Number);
         fixedNowMinutes = h * 60 + m;
       }
+      // Keyboard offset (Arrow Up/Down add or remove 15 minutes from the
+      // current time without freezing it). Space resets to 0.
+      let timeOffsetMinutes = 0;
       function getNowMinutes() {
-        if (fixedNowMinutes !== null) return fixedNowMinutes;
-        const now = new Date();
-        return now.getHours() * 60 + now.getMinutes();
+        const base =
+          fixedNowMinutes !== null
+            ? fixedNowMinutes
+            : (() => {
+                const now = new Date();
+                return now.getHours() * 60 + now.getMinutes();
+              })();
+        return base + timeOffsetMinutes;
       }
 
       function toMinutes(item) {
@@ -481,6 +489,11 @@ const roomsJson = JSON.stringify(
         showSlide(currentIndex);
       }
 
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+      }
+
       // Init
       rerender();
 
@@ -501,6 +514,45 @@ const roomsJson = JSON.stringify(
           showSlide(i);
           timer = setInterval(nextSlide, INTERVAL);
         });
+      });
+
+      // Keyboard controls: Arrow Left/Right to switch slides, Arrow Up/Down
+      // to shift the current time by 15 minutes (without freezing it),
+      // Space to reset that offset.
+      document.addEventListener("keydown", (e) => {
+        if (e.target instanceof HTMLElement && e.target.matches("input, textarea")) {
+          return;
+        }
+        switch (e.key) {
+          case "ArrowRight":
+            clearInterval(timer);
+            nextSlide();
+            timer = setInterval(nextSlide, INTERVAL);
+            e.preventDefault();
+            break;
+          case "ArrowLeft":
+            clearInterval(timer);
+            prevSlide();
+            timer = setInterval(nextSlide, INTERVAL);
+            e.preventDefault();
+            break;
+          case "ArrowUp":
+            timeOffsetMinutes += 15;
+            rerender();
+            e.preventDefault();
+            break;
+          case "ArrowDown":
+            timeOffsetMinutes -= 15;
+            rerender();
+            e.preventDefault();
+            break;
+          case " ":
+          case "Spacebar":
+            timeOffsetMinutes = 0;
+            rerender();
+            e.preventDefault();
+            break;
+        }
       });
     </script>
 

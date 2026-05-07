@@ -185,7 +185,10 @@ const roomsJson = JSON.stringify(
       const rooms = JSON.parse(roomsJson);
 
       const params = new URLSearchParams(window.location.search);
-      const activeSalle = params.get("salle") || "conference";
+      let activeSalle = params.get("salle") || "conference";
+
+      // Cycle order for the Enter key: tv (all rooms) then each room in order.
+      const salleCycle = ["tv", ...rooms.map((r) => r.id)];
 
       // Compare only hours/minutes so the page works on any day.
       // Recomputed on every read so the page reflects the current time
@@ -322,6 +325,8 @@ const roomsJson = JSON.stringify(
           grid.classList.add("is-tv");
           return;
         }
+
+        grid.classList.remove("is-tv");
 
         const activeRoom = rooms.find((r) => r.id === activeSalle);
         const secondaryRooms = rooms.filter((r) => r.id !== activeSalle);
@@ -567,6 +572,14 @@ const roomsJson = JSON.stringify(
             rerender();
             e.preventDefault();
             break;
+          case "Enter": {
+            const idx = salleCycle.indexOf(activeSalle);
+            const nextIdx = idx === -1 ? 0 : (idx + 1) % salleCycle.length;
+            activeSalle = salleCycle[nextIdx];
+            rerender();
+            e.preventDefault();
+            break;
+          }
         }
       });
     </script>

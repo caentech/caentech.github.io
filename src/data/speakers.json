@@ -93,5 +93,12 @@
     "role": "",
     "company": "FTM",
     "bio": "Après de nombreuses années chez Société Générale en charge des serveurs applicatifs, j'ai rejoint l'aventure Mirakl en 2020 dans l'équipe Site Reliability Engineering.\n\nFort de ces quelques années d'expérience, j'ai eu l'opportunité de prendre un peu de recul sur la technique et d'encadrer l'une des équipes SRE en tant qu'Engineering Manager.\n\nAvec 2 Database Administrators et des fous du templating Helm/Golang, nous avons vécu des soirées parfois trop longues, mais surtout de beaux succès !"
+  },
+  {
+    "id": "remy-teste",
+    "name": "Rémy Teste",
+    "role": "Réserviste Cyber",
+    "company": "RECyM",
+    "bio": ""
   }
 ]

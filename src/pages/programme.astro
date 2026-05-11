@@ -36,9 +36,31 @@ function getSpeakerNames(speakerIds: string[]) {
     .join(", ");
 }
 
-// Build unique time slots sorted chronologically
+// Detect "nested" all-rooms sessions: shorter all-rooms sessions that fit
+// entirely within a longer all-rooms session (e.g. a quiz during lunch).
+const allRoomsSessions = allProgram.filter((p) => p.data.roomId === "all");
+const nestedById = new Map<string, (typeof allRoomsSessions)[number]>();
+const parentToNested = new Map<string, (typeof allRoomsSessions)[number]>();
+for (const s of allRoomsSessions) {
+  const parent = allRoomsSessions.find(
+    (other) =>
+      other.data.id !== s.data.id &&
+      other.data.startTime <= s.data.startTime &&
+      other.data.endTime >= s.data.endTime &&
+      (other.data.startTime !== s.data.startTime ||
+        other.data.endTime !== s.data.endTime),
+  );
+  if (parent) {
+    nestedById.set(s.data.id, s);
+    parentToNested.set(parent.data.id, s);
+  }
+}
+
+// Build unique time slots sorted chronologically (skip nested sessions)
 const timeSet = new Set<string>();
-allProgram.forEach((p) => timeSet.add(p.data.startTime));
+allProgram.forEach((p) => {
+  if (!nestedById.has(p.data.id)) timeSet.add(p.data.startTime);
+});
 const sortedTimes = [...timeSet].sort();
 
 // Build calendar data
@@ -73,6 +95,7 @@ const timeSlots = sortedTimes.map((time) => {
     (p) => p.data.startTime === time && p.data.roomId === "all",
   );
   if (allRoomsItem) {
+    const nested = parentToNested.get(allRoomsItem.data.id);
     slots.push({
       roomId: "all",
       item: {
@@ -88,6 +111,16 @@ const timeSlots = sortedTimes.map((time) => {
         type: allRoomsItem.data.type,
         roomId: allRoomsItem.data.roomId,
         isAllRooms: true,
+        nested: nested
+          ? {
+              id: nested.data.id,
+              title: nested.data.title,
+              speakerNames: getSpeakerNames(nested.data.speakerIds),
+              formattedStart: formatTime(nested.data.startTime),
+              formattedEnd: formatTime(nested.data.endTime),
+              theme: nested.data.theme,
+            }
+          : null,
       },
     });
   }

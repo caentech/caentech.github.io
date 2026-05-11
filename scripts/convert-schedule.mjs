@@ -171,6 +171,31 @@ const OUVERTURE_DES_PORTES = {
   type: "conférence",
 };
 
+// Fixed speaker not present in the imported schedule.
+const QUIZZ_CYBERSECURITE_SPEAKER = {
+  id: "remy-teste",
+  name: "Rémy Teste",
+  role: "Réserviste Cyber",
+  company: "RECyM",
+  bio: "",
+};
+
+// Fixed program entry not present in the imported schedule.
+// Sits inside the lunch break and is displayed full-width (roomId: "all").
+const QUIZZ_CYBERSECURITE = {
+  id: "quizz-cybersecurite",
+  title: "Quizz Cybersécurité",
+  description:
+    "<p>Cette session aura lieu dans l'espace <strong>Experiment</strong> (l'espace restauration), pendant la pause déjeuner.</p>",
+  speakerIds: [QUIZZ_CYBERSECURITE_SPEAKER.id],
+  startTime: `${EVENT_DATE}T12:30:00.000+02:00`,
+  endTime: `${EVENT_DATE}T13:00:00.000+02:00`,
+  roomId: "all",
+  theme: "Cybersécurité & Résilience",
+  level: "débutant",
+  type: "conférence",
+};
+
 // Extract unique speakers
 const speakersMap = new Map();
 for (const session of data.sessions) {
@@ -275,6 +300,11 @@ for (let i = 0; i < uniqueStarts.length - 1; i++) {
     });
   }
 }
+
+// Add fixed entries that must coexist with auto-generated breaks
+// (added after gap detection so they don't alter break computation).
+program.push(QUIZZ_CYBERSECURITE);
+speakersMap.set(QUIZZ_CYBERSECURITE_SPEAKER.id, QUIZZ_CYBERSECURITE_SPEAKER);
 
 // Re-sort after adding breaks
 program.sort((a, b) => {

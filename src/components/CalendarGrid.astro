@@ -21,6 +21,14 @@ interface Props {
           type: string;
           roomId: string;
           isAllRooms: boolean;
+          nested?: {
+            id: string;
+            title: string;
+            speakerNames: string;
+            formattedStart: string;
+            formattedEnd: string;
+            theme: string;
+          } | null;
         } | null;
       }>;
     }[];
@@ -53,7 +61,7 @@ const { timeSlots, rooms } = calendarData;
 
         {allRoomsItem ? (
           <div
-            class="Calendar-slot allRooms"
+            class={`Calendar-slot allRooms${allRoomsItem.nested ? " hasNested" : ""}`}
             style={`grid-column: 2 / -1;`}
             data-talk-id={allRoomsItem.id}
             role="button"
@@ -64,6 +72,21 @@ const { timeSlots, rooms } = calendarData;
               <div class="Calendar-slotSpeaker">{allRoomsItem.speakerNames}</div>
             )}
             <div class="Calendar-slotTime">{allRoomsItem.formattedStart} – {allRoomsItem.formattedEnd}</div>
+            {allRoomsItem.nested && (
+              <div
+                class="Calendar-nested"
+                data-talk-id={allRoomsItem.nested.id}
+                role="button"
+                tabindex="0"
+              >
+                <span class="Calendar-nestedLabel">Pendant la pause</span>
+                <div class="Calendar-nestedTitle">{allRoomsItem.nested.title}</div>
+                {allRoomsItem.nested.speakerNames && (
+                  <div class="Calendar-nestedSpeaker">{allRoomsItem.nested.speakerNames}</div>
+                )}
+                <div class="Calendar-nestedTime">{allRoomsItem.nested.formattedStart} – {allRoomsItem.nested.formattedEnd}</div>
+              </div>
+            )}
           </div>
         ) : (
           rooms.map((room) => {

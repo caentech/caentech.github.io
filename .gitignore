@@ -6,3 +6,9 @@ node_modules
 dist
 /.playwright-mcp/
 .claude/.settings.json
+
+# Données privées billetterie (emails, téléphones, etc.)
+*.csv
+*.xlsx
+analyse-billeterrie.html
+screenshot-*.png

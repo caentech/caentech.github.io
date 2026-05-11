@@ -1,5 +1,13 @@
 [
   {
+    "id": "emmanuel-assie",
+    "name": "Emmanuel Assié",
+    "role": "",
+    "company": "Webaxys",
+    "bio": "Infirmier de formation, Emmanuel Assié entre dans le numérique par la voie de l’usage, du soin et de l’humain.\n\nAutodidacte en informatique, il conçoit dès 1996 un site de partage de protocoles de soin et d’outils interactifs pour la réanimation, primé au niveau européen.\n\nFondateur de Webaxys, pionnier du numériquement responsable, il ouvre en 2010 le premier datacenter écoresponsable de Normandie, puis porte avec Nissan et Eaton une première européenne finaliste des DataCenter Dynamics Awards face aux géants mondiaux du secteur.\n\nQuinze ans plus tard, Webaxys exploite cinq Datacenter en France, dont celui de Caen, ouvert fin 2025 et considéré comme l’un des plus innovants d’Europe, incarnation de sa vision : des sites à taille humaine, écoresponsables, ancrés dans les territoires et au service de l’humain.",
+    "photo": "/images/speakers/emmanuel-assie.jpg"
+  },
+  {
     "id": "christophe-rosenberger",
     "name": "Christophe Rosenberger",
     "role": "",
@@ -32,12 +40,12 @@
     "photo": "/images/speakers/ivan-dalmet.jpg"
   },
   {
-    "id": "vinorth-varatharasan",
-    "name": "Vinorth Varatharasan",
+    "id": "vinorth",
+    "name": "Vinorth",
     "role": "",
     "company": "OCTO Technology",
     "bio": "Senior Data Scientist et Tech Lead chez OCTO Technology. 7 ans d'expérience en Data : Computer Vision, LLM/GenAI, MLOps. Actuellement en mission dans le secteur bancaire, je conçois des pipelines de traitement documentaire avec des LLM multimodaux. Diplômé en robotique (UTC) et véhicules autonomes (Cranfield University, UK), auteur de publications IEEE (60+ citations). Auteur sur le blog OCTO et speaker à La Grosse Conf 2026.",
-    "photo": "/images/speakers/vinorth-varatharasan.png"
+    "photo": "/images/speakers/vinorth.png"
   },
   {
     "id": "romuald-poretti",

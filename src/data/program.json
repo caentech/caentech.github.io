@@ -24,10 +24,12 @@
     "type": "conférence"
   },
   {
-    "id": "keynote-annonce-prochaine",
-    "title": "Keynote : Annonce prochaine",
+    "id": "keynote-titre-prochainement-annonce",
+    "title": "Keynote : Titre prochainement annoncé",
     "description": "<p>Annonce prochaine </p>",
-    "speakerIds": [],
+    "speakerIds": [
+      "emmanuel-assie"
+    ],
     "startTime": "2026-06-09T09:15:00.000+02:00",
     "endTime": "2026-06-09T09:45:00.000+02:00",
     "roomId": "conference",
@@ -81,7 +83,7 @@
     "description": "",
     "speakerIds": [],
     "startTime": "2026-06-09T10:45:00.000+02:00",
-    "endTime": "2026-06-09T11:15:00.000+02:00",
+    "endTime": "2026-06-09T11:10:00.000+02:00",
     "roomId": "all",
     "theme": "Networking",
     "level": "débutant",
@@ -95,8 +97,8 @@
       "romuald-poretti",
       "kevin-guerin"
     ],
-    "startTime": "2026-06-09T11:15:00.000+02:00",
-    "endTime": "2026-06-09T12:00:00.000+02:00",
+    "startTime": "2026-06-09T11:10:00.000+02:00",
+    "endTime": "2026-06-09T11:55:00.000+02:00",
     "roomId": "auditorium",
     "theme": "IA, Data & Automatisation",
     "level": "intermédiaire",
@@ -107,7 +109,7 @@
     "title": "De 6 mois à 2 jours : la révolution LLM pour le traitement documentaire",
     "description": "<p>Classifier et extraire les données de milliers, voire de millions de documents, c&#39;était <strong>6 mois de développement</strong>, une équipe de ML engineers et d&#39;annotateurs externes, des dizaines de milliers d&#39;images annotées et un budget à six chiffres.</p>\n<p>Aujourd&#39;hui, un LLM multimodal fait le même travail en <strong>quelques jours</strong>, sans dataset et sans entraînement.</p>\n<p>Trop beau pour être vrai ? Dans cette <strong>démo live</strong>, je vous montre exactement comment ça fonctionne sur un cas réel de KYC bancaire, par exemple CNI, passeports, justificatifs, RIB, et surtout, comment on évite que le modèle <strong>hallucine</strong> sur vos données les plus sensibles.</p>",
     "speakerIds": [
-      "vinorth-varatharasan"
+      "vinorth"
     ],
     "startTime": "2026-06-09T11:15:00.000+02:00",
     "endTime": "2026-06-09T12:00:00.000+02:00",

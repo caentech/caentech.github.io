@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { resolve, extname } from "node:path";
 
 const inputPath = process.argv[2];
@@ -337,8 +337,26 @@ function pickExtension(url, contentType) {
   return CONTENT_TYPE_TO_EXT[base] || ".jpg";
 }
 
+const LOCAL_PHOTO_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"];
+
+function findLocalPhoto(speakerId) {
+  for (const ext of LOCAL_PHOTO_EXTENSIONS) {
+    const filename = `${speakerId}${ext}`;
+    if (existsSync(resolve(SPEAKERS_IMAGES_DIR, filename))) {
+      return `${SPEAKERS_PUBLIC_PATH}/${filename}`;
+    }
+  }
+  return null;
+}
+
 async function downloadSpeakerPhoto(speaker) {
-  if (!speaker.photo) return;
+  const localPhoto = findLocalPhoto(speaker.id);
+
+  if (!speaker.photo) {
+    if (localPhoto) speaker.photo = localPhoto;
+    return;
+  }
+
   const url = speaker.photo;
   try {
     const res = await fetch(url);
@@ -349,9 +367,16 @@ async function downloadSpeakerPhoto(speaker) {
     writeFileSync(resolve(SPEAKERS_IMAGES_DIR, filename), buffer);
     speaker.photo = `${SPEAKERS_PUBLIC_PATH}/${filename}`;
   } catch (err) {
-    console.warn(
-      `Failed to download photo for ${speaker.id} (${url}): ${err.message}`,
-    );
+    if (localPhoto) {
+      speaker.photo = localPhoto;
+      console.warn(
+        `Failed to download photo for ${speaker.id} (${url}): ${err.message}. Using local fallback ${localPhoto}.`,
+      );
+    } else {
+      console.warn(
+        `Failed to download photo for ${speaker.id} (${url}): ${err.message}. No local fallback available.`,
+      );
+    }
   }
 }
 

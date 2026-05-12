@@ -1,8 +1,18 @@
 [
   {
-    "id": "ep-01-arterya-lucile-derly",
+    "id": "ep-07-ucsc-maximilian-haeussler",
+    "title": "Explorer le génome comme une carte — bioinformatique, Santa-Cruz et Normandie, avec Maximilian Haeussler",
+    "image": "/images/podcasts/maximilian-haeussler.webp",
+    "summary": "Maximilian Haeussler, chercheur au Genomics Institute de l'Université de Californie à Santa Cruz, revient sur son travail autour du UCSC Genome Browser : bioinformatique, visualisation de données génomiques, CRISPR et impact de l'IA sur la recherche, depuis un parcours entre Europe et États-Unis.",
+    "links": {
+      "spotify": "https://open.spotify.com/episode/67fy0Om2r5StnVMaX0BzOm",
+      "apple": "https://podcasts.apple.com/fr/podcast/explorer-le-g%C3%A9nome-comme-une-carte-bioinformatique/id1871428177?i=1000766403768"
+    }
+  },
+  {
+    "id": "ep-06-arterya-lucile-derly",
     "title": "Construire un dispositif médical depuis la Normandie : six ans de deep tech — avec Lucile Derly (Arterya)",
-    "image": "/images/podcasts/arterya.webp",
+    "image": "/images/podcasts/lucile-derly.webp",
     "summary": "Lucile Derly, fondatrice et CEO d'Arterya, raconte six ans de R&D pour développer Blood'Up, un dispositif qui localise précisément l'artère radiale. Deep tech médicale, réglementation, certification et patience depuis Caen.",
     "links": {
       "spotify": "https://open.spotify.com/episode/76mthujNKVzgwAnbiBmXSu",
@@ -10,9 +20,9 @@
     }
   },
   {
-    "id": "ep-02-yousign-antoine-louiset",
+    "id": "ep-05-yousign-antoine-louiset",
     "title": "Antoine Louiset — co-fondateur & ex-CTO de Yousign : de la scale-up tech à l'engagement pour le climat",
-    "image": "/images/podcasts/yousign.webp",
+    "image": "/images/podcasts/antoine-louiset.webp",
     "summary": "Antoine Louiset, co-fondateur et ancien CTO de Yousign, revient sur dix ans à construire la plateforme technique d'un acteur européen de la signature électronique, avant de se consacrer aux enjeux climatiques.",
     "links": {
       "spotify": "https://open.spotify.com/episode/3rqer0yTzTuQLfIRCtQs2L",
@@ -20,9 +30,9 @@
     }
   },
   {
-    "id": "ep-03-meta-quentin-deslandes",
+    "id": "ep-04-meta-quentin-deslandes",
     "title": "Développer de l'open source à l'échelle mondiale, depuis Caen — avec Quentin Deslandes (Meta)",
-    "image": "/images/podcasts/meta.webp",
+    "image": "/images/podcasts/quentin-deslandes.webp",
     "summary": "Quentin Deslandes, développeur open source chez Meta, partage son parcours et ce que signifie contribuer à de l'open source mondial tout en vivant et travaillant depuis Caen : process, collaboration et travail asynchrone.",
     "links": {
       "spotify": "https://open.spotify.com/episode/5IdczZkdYXnutiH8aXqexC",
@@ -30,9 +40,9 @@
     }
   },
   {
-    "id": "ep-04-kanta-pierre-lepetit",
+    "id": "ep-03-kanta-pierre-lepetit",
     "title": "CTO en legal tech : sécurité, scalabilité et équipe — avec Pierre Lepetit (Kanta)",
-    "image": "/images/podcasts/kanta.webp",
+    "image": "/images/podcasts/pierre-lepetit.webp",
     "summary": "Pierre Lepetit, co-fondateur et CTO de Kanta, détaille la construction d'une legal tech caennaise qui modernise la conformité anti-blanchiment : architecture, sécurité des données sensibles et structuration de l'équipe.",
     "links": {
       "spotify": "https://open.spotify.com/episode/20u1rp5AocaNlhqVw5LntP",
@@ -40,9 +50,9 @@
     }
   },
   {
-    "id": "ep-05-orion-jordan-ernult",
+    "id": "ep-02-orion-jordan-ernult",
     "title": "Doper le jeu, pas les joueurs : data, vision et sport en conditions réelles — avec Jordan Ernult (ORION SporTech)",
-    "image": "/images/podcasts/orion.webp",
+    "image": "/images/podcasts/jordan-ernult.webp",
     "summary": "Jordan Ernult, CTO et co-fondateur d'ORION SporTech, plonge dans la performance sportive par la data : vision par ordinateur, capteurs et analyse du jeu en conditions réelles, conçus depuis Caen.",
     "links": {
       "spotify": "https://open.spotify.com/episode/2NXXnYEl6VUPwBIOV2BhAV",
@@ -50,9 +60,9 @@
     }
   },
   {
-    "id": "ep-06-lowtech-ilan-vermeren",
+    "id": "ep-01-lowtech-ilan-vermeren",
     "title": "Low-tech, territoire et sobriété : penser la tech autrement en Normandie — avec Ilan Vermeren",
-    "image": "/images/podcasts/lowtech.webp",
+    "image": "/images/podcasts/ilan-vermeren.webp",
     "summary": "Ilan Vermeren, chargé de mission Low-Tech à la Région Normandie, prend du recul sur la tech : ce que recouvre concrètement la low-tech, son ancrage territorial et ses frictions avec l'écosystème tech local.",
     "links": {
       "spotify": "https://open.spotify.com/episode/5RNH8e7OB6UHci6yeeiwxK",

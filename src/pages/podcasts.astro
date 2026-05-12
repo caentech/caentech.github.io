@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { Headphones } from "lucide-astro";
 
-const allPodcasts = await getCollection("podcasts");
+const allPodcasts = (await getCollection("podcasts")).sort((a, b) => b.id.localeCompare(a.id));
 ---
 
 <BaseLayout title="Podcasts — Caen.Tech" description="Les podcasts Caen.Tech : échanges et retours d'expérience de l'écosystème tech caennais.">

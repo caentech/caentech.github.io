@@ -131,8 +131,8 @@
     "type": "conférence"
   },
   {
-    "id": "quizz-cybersecurite",
-    "title": "Quizz Cybersécurité",
+    "id": "quiz-cybersecurite",
+    "title": "Quiz Cybersécurité",
     "description": "<p>Cette session aura lieu dans l'espace <strong>Experiment</strong> (l'espace restauration), pendant la pause déjeuner.</p>",
     "speakerIds": [
       "remy-teste"

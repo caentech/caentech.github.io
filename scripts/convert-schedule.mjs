@@ -172,7 +172,7 @@ const OUVERTURE_DES_PORTES = {
 };
 
 // Fixed speaker not present in the imported schedule.
-const QUIZZ_CYBERSECURITE_SPEAKER = {
+const QUIZ_CYBERSECURITE_SPEAKER = {
   id: "remy-teste",
   name: "Rémy Teste",
   role: "Réserviste Cyber",
@@ -182,12 +182,12 @@ const QUIZZ_CYBERSECURITE_SPEAKER = {
 
 // Fixed program entry not present in the imported schedule.
 // Sits inside the lunch break and is displayed full-width (roomId: "all").
-const QUIZZ_CYBERSECURITE = {
-  id: "quizz-cybersecurite",
-  title: "Quizz Cybersécurité",
+const QUIZ_CYBERSECURITE = {
+  id: "quiz-cybersecurite",
+  title: "Quiz Cybersécurité",
   description:
     "<p>Cette session aura lieu dans l'espace <strong>Experiment</strong> (l'espace restauration), pendant la pause déjeuner.</p>",
-  speakerIds: [QUIZZ_CYBERSECURITE_SPEAKER.id],
+  speakerIds: [QUIZ_CYBERSECURITE_SPEAKER.id],
   startTime: `${EVENT_DATE}T12:30:00.000+02:00`,
   endTime: `${EVENT_DATE}T13:00:00.000+02:00`,
   roomId: "all",
@@ -303,8 +303,8 @@ for (let i = 0; i < uniqueStarts.length - 1; i++) {
 
 // Add fixed entries that must coexist with auto-generated breaks
 // (added after gap detection so they don't alter break computation).
-program.push(QUIZZ_CYBERSECURITE);
-speakersMap.set(QUIZZ_CYBERSECURITE_SPEAKER.id, QUIZZ_CYBERSECURITE_SPEAKER);
+program.push(QUIZ_CYBERSECURITE);
+speakersMap.set(QUIZ_CYBERSECURITE_SPEAKER.id, QUIZ_CYBERSECURITE_SPEAKER);
 
 // Re-sort after adding breaks
 program.sort((a, b) => {

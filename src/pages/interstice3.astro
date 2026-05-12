@@ -1,0 +1,1171 @@
+---
+import { getCollection, getEntry } from "astro:content";
+
+const allProgram = await getCollection("program");
+const allSpeakers = await getCollection("speakers");
+const allRooms = await getCollection("rooms");
+const allSponsors = await getCollection("sponsors");
+const siteEntry = await getEntry("site", "caen-tech-2026");
+const site = siteEntry!.data;
+
+function formatTime(iso: string): string {
+  const d = new Date(iso);
+  return d.toLocaleTimeString("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Europe/Paris",
+  });
+}
+
+function getSpeakerNames(ids: string[]): string {
+  return ids
+    .map((id) => allSpeakers.find((s) => s.id === id)?.data.name)
+    .filter(Boolean)
+    .join(", ");
+}
+
+const roomsById = Object.fromEntries(allRooms.map((r) => [r.id, r.data]));
+
+const sortedProgram = [...allProgram].sort(
+  (a, b) => new Date(a.data.startTime).getTime() - new Date(b.data.startTime).getTime(),
+);
+
+const tiers = [
+  { key: "gold" as const, label: "Gold", color: "#d4a017" },
+  { key: "silver" as const, label: "Silver", color: "#8a8a8a" },
+  { key: "bronze" as const, label: "Bronze", color: "#a0522d" },
+];
+
+const programJson = JSON.stringify(
+  sortedProgram.map((p) => ({
+    id: p.id,
+    title: p.data.title,
+    speakers: getSpeakerNames(p.data.speakerIds),
+    startTime: p.data.startTime,
+    endTime: p.data.endTime,
+    roomId: p.data.roomId,
+    roomName: p.data.roomId === "all" ? "Toutes les salles" : (roomsById[p.data.roomId]?.name ?? ""),
+    theme: p.data.theme,
+    type: p.data.type,
+  })),
+);
+
+const roomsJson = JSON.stringify(
+  allRooms
+    .slice()
+    .sort((a, b) => a.data.order - b.data.order)
+    .map((r) => ({ id: r.id, name: r.data.name, color: r.data.color })),
+);
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920, height=1080, initial-scale=1" />
+    <meta name="google" content="notranslate" />
+    <title>Caen.Tech — Interstice (v3 fade + translateY)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="Interstice-stage">
+    <!-- ===== Slide 1: Programme ===== -->
+    <div class="Interstice-slide" data-slide="programme">
+      <div class="Interstice-diagonal"></div>
+      <header class="Interstice-header">
+        <a class="Interstice-logo" href="/" aria-label="Caen.Tech">
+          <img src="/images/logos/logo-fond-jaune.png" alt="Caen.Tech" />
+        </a>
+        <div class="Interstice-meta">9 juin 2026 — MoHo, Caen</div>
+      </header>
+      <main class="Interstice-content">
+        <div class="Programme-title">
+          <h1>Programme<br />de la journ&eacute;e</h1>
+          <div class="Programme-titleSlash"></div>
+        </div>
+        <div class="Programme-grid" id="programme-grid">
+          <!-- Filled by JS based on ?salle param -->
+        </div>
+      </main>
+      <footer class="Interstice-footer">
+        <span class="Interstice-footerTime" data-clock>--:--</span>
+      </footer>
+    </div>
+
+    <!-- ===== Slide 2: Sponsors ===== -->
+    <div class="Interstice-slide" data-slide="sponsors">
+      <div class="Interstice-diagonal"></div>
+      <header class="Interstice-header">
+        <a class="Interstice-logo" href="/" aria-label="Caen.Tech">
+          <img src="/images/logos/logo-fond-jaune.png" alt="Caen.Tech" />
+        </a>
+        <div class="Interstice-meta">9 juin 2026 — MoHo, Caen</div>
+      </header>
+      <main class="Interstice-content Sponsors-content">
+        <h1 class="Sponsors-title">Nos sponsors</h1>
+        <div class="Sponsors-titleSlash"></div>
+        {
+          tiers.map(({ key, label, color }) => {
+            const sponsors = allSponsors.filter((s) => s.data.tier === key);
+            if (sponsors.length === 0) return null;
+            return (
+              <div class="Sponsors-tier">
+                <h2 class="Sponsors-tierLabel" style={`color: ${color}`}>
+                  {label}
+                </h2>
+                <div class:list={["Sponsors-tierGrid", key]}>
+                  {sponsors.map((s) => (
+                    <div class="Sponsors-tierItem">
+                      <img src={s.data.logo} alt={s.data.name} />
+                      <span>{s.data.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })
+        }
+      </main>
+      <footer class="Interstice-footer">
+        <span class="Interstice-footerTime" data-clock>--:--</span>
+      </footer>
+    </div>
+
+    <!-- ===== Slide 3: Session courante ===== -->
+    <div class="Interstice-slide" data-slide="session">
+      <div class="Interstice-diagonal"></div>
+      <header class="Interstice-header">
+        <a class="Interstice-logo" href="/" aria-label="Caen.Tech">
+          <img src="/images/logos/logo-fond-jaune.png" alt="Caen.Tech" />
+        </a>
+        <div class="Interstice-meta">9 juin 2026 — MoHo, Caen</div>
+      </header>
+      <main class="Interstice-content Session-content">
+        <h1 class="Session-title" id="session-title">En ce moment</h1>
+        <div class="Session-titleSlash"></div>
+        <div class="Session-cards" id="session-cards">
+          <!-- Filled by JS with current sessions -->
+        </div>
+        <div class="Session-empty" id="session-empty" hidden>
+          <p>La journ&eacute;e est termin&eacute;e</p>
+          <p class="Session-emptyHint">Merci et &agrave; l&rsquo;ann&eacute;e prochaine&nbsp;!</p>
+        </div>
+      </main>
+      <footer class="Interstice-footer">
+        <span class="Interstice-footerTime" data-clock>--:--</span>
+      </footer>
+    </div>
+
+    <div class="Interstice-pips" id="slide-pips">
+      <button class="Interstice-pip is-active" data-target="programme" aria-label="Programme"></button>
+      <button class="Interstice-pip" data-target="sponsors" aria-label="Sponsors"></button>
+      <button class="Interstice-pip" data-target="session" aria-label="Session courante"></button>
+    </div>
+    </div>
+
+    <script is:inline>
+      (function fitStage() {
+        const stage = document.querySelector(".Interstice-stage");
+        if (!stage) return;
+        function apply() {
+          const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+          stage.style.transform = "scale(" + scale + ")";
+        }
+        apply();
+        window.addEventListener("resize", apply);
+      })();
+    </script>
+
+    <script is:inline define:vars={{ programJson, roomsJson }}>
+      const program = JSON.parse(programJson);
+      const rooms = JSON.parse(roomsJson);
+
+      const params = new URLSearchParams(window.location.search);
+      let activeSalle = params.get("salle") || "conference";
+
+      // Cycle order for the Enter key: tv (all rooms) then each room in order.
+      const salleCycle = ["tv", ...rooms.map((r) => r.id)];
+
+      // Compare only hours/minutes so the page works on any day.
+      // Recomputed on every read so the page reflects the current time
+      // without needing a reload.
+      const heureParam = params.get("heure");
+      let fixedNowMinutes = null;
+      if (heureParam) {
+        const [h, m] = heureParam.split(":").map(Number);
+        fixedNowMinutes = h * 60 + m;
+      }
+      // Keyboard offset (Arrow Up/Down add or remove 15 minutes from the
+      // current time without freezing it). Space resets to 0.
+      let timeOffsetMinutes = 0;
+      function getNowMinutes() {
+        const base =
+          fixedNowMinutes !== null
+            ? fixedNowMinutes
+            : (() => {
+                const now = new Date();
+                return now.getHours() * 60 + now.getMinutes();
+              })();
+        return base + timeOffsetMinutes;
+      }
+
+      function toMinutes(item) {
+        const start = new Date(item.startTime);
+        const end = new Date(item.endTime);
+        return {
+          startMin: start.getHours() * 60 + start.getMinutes(),
+          endMin: end.getHours() * 60 + end.getMinutes(),
+        };
+      }
+
+      function isBreakItem(item) {
+        return item.roomId === "all" && /^pause/i.test(item.title);
+      }
+
+      function isCurrentItem(item) {
+        const { startMin, endMin } = toMinutes(item);
+        const now = getNowMinutes();
+        return now >= startMin && now < endMin;
+      }
+
+      function isPastItem(item) {
+        const { endMin } = toMinutes(item);
+        return getNowMinutes() >= endMin;
+      }
+
+      function isFutureItem(item) {
+        const { startMin } = toMinutes(item);
+        return getNowMinutes() < startMin;
+      }
+
+      // Keep only the last N past items + up to keepFuture upcoming items
+      function trimPastItems(items, keepPast, keepFuture) {
+        const pastItems = items.filter((p) => isPastItem(p));
+        const rest = items.filter((p) => !isPastItem(p));
+        const trimmedPast = pastItems.slice(-keepPast);
+        const trimmedFuture = keepFuture != null ? rest.slice(0, keepFuture) : rest;
+        return trimmedPast.concat(trimmedFuture);
+      }
+
+      // --- Programme slide ---
+      function renderProgrammeItem(item, secondary) {
+        const time = new Date(item.startTime).toLocaleTimeString("fr-FR", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "Europe/Paris",
+        });
+        const isBreak = isBreakItem(item);
+        const isCurrent = !isBreak && isCurrentItem(item);
+        const isPast = isPastItem(item);
+        let cls = "Programme-item";
+        if (secondary) cls += " is-secondary";
+        if (isBreak) cls += " is-break";
+        if (isPast) cls += " is-past";
+        if (isCurrent) cls += " is-current";
+        let html = '<div class="' + cls + '">';
+        html +=
+          '<span class="Programme-itemTime' +
+          (secondary ? " is-secondary" : "") +
+          '">' +
+          time +
+          "</span>";
+        html += '<div class="Programme-itemBody">';
+        html +=
+          '<h3 class="Programme-itemTitle' +
+          (secondary ? " is-secondary" : "") +
+          '">' +
+          item.title +
+          "</h3>";
+        if (item.speakers) {
+          html += '<p class="Programme-itemSpeakers">' + item.speakers + "</p>";
+        }
+        html += "</div>";
+        if (item.type === "atelier" && !secondary) {
+          html += '<span class="Programme-itemTag">Atelier</span>';
+        }
+        html += "</div>";
+        return html;
+      }
+
+      function buildProgramme() {
+        const grid = document.getElementById("programme-grid");
+        if (!grid) return;
+
+        // TV mode: render every room as an equal-width main column
+        // (no main/secondary distinction).
+        if (activeSalle === "tv") {
+          let tvHtml = "";
+          for (const r of rooms) {
+            const items = program
+              .filter((p) => p.roomId === r.id || p.roomId === "all")
+              .sort(
+                (a, b) =>
+                  new Date(a.startTime).getTime() - new Date(b.startTime).getTime(),
+              );
+            const visible = trimPastItems(items, 1, 7);
+            tvHtml += '<section class="Programme-main">';
+            tvHtml +=
+              '<div class="Programme-roomHeader">' +
+              '<h2 class="Programme-roomName">' +
+              r.name +
+              "</h2>" +
+              '<div class="Programme-roomLine"></div>' +
+              "</div>";
+            tvHtml += '<div class="Programme-items">';
+            for (const item of visible) {
+              tvHtml += renderProgrammeItem(item, false);
+            }
+            tvHtml += "</div></section>";
+          }
+          grid.innerHTML = tvHtml;
+          grid.classList.add("is-tv");
+          return;
+        }
+
+        grid.classList.remove("is-tv");
+
+        const activeRoom = rooms.find((r) => r.id === activeSalle);
+        const secondaryRooms = rooms.filter((r) => r.id !== activeSalle);
+
+        const mainItems = program.filter((p) => p.roomId === activeSalle || p.roomId === "all");
+        const secondaryItems = program.filter(
+          (p) => p.roomId !== activeSalle && p.roomId !== "all",
+        );
+
+        const secondaryByRoom = {};
+        for (const r of secondaryRooms) {
+          secondaryByRoom[r.id] = secondaryItems.filter((p) => p.roomId === r.id);
+        }
+
+        let html = "";
+
+        // Main column
+        html += '<section class="Programme-main">';
+        html +=
+          '<div class="Programme-roomHeader">' +
+          '<h2 class="Programme-roomName">' +
+          (activeRoom ? activeRoom.name : "Programme") +
+          "</h2>" +
+          '<div class="Programme-roomLine"></div>' +
+          "</div>";
+        html += '<div class="Programme-items">';
+        for (const item of trimPastItems(mainItems, 1, 11)) {
+          html += renderProgrammeItem(item, false);
+        }
+        html += "</div></section>";
+
+        // Secondary columns
+        html += '<div class="Programme-secondary">';
+        for (const r of secondaryRooms) {
+          const items = secondaryByRoom[r.id] || [];
+          html += '<section class="Programme-secondaryCol">';
+          html +=
+            '<div class="Programme-roomHeader is-secondary">' +
+            '<h2 class="Programme-roomName is-secondary">' +
+            r.name +
+            "</h2>" +
+            '<div class="Programme-roomLine"></div>' +
+            "</div>";
+          html += '<div class="Programme-items is-secondary">';
+          for (const item of trimPastItems(items, 1, 7)) {
+            html += renderProgrammeItem(item, true);
+          }
+          html += "</div></section>";
+        }
+        html += "</div>";
+
+        grid.innerHTML = html;
+      }
+
+      // --- Session slide ---
+      function buildSession() {
+        const container = document.getElementById("session-cards");
+        const empty = document.getElementById("session-empty");
+        const title = document.getElementById("session-title");
+        if (!container || !empty) return;
+
+        function isSessionCandidate(p) {
+          return !isBreakItem(p);
+        }
+
+        const roomSort = (a, b) => {
+          if (a.roomId === activeSalle && b.roomId !== activeSalle) return -1;
+          if (a.roomId !== activeSalle && b.roomId === activeSalle) return 1;
+          return 0;
+        };
+
+        const current = program
+          .filter((p) => isCurrentItem(p) && isSessionCandidate(p))
+          .sort(roomSort);
+
+        // If no current sessions, find next upcoming ones
+        let items = current;
+        let isUpcoming = false;
+        if (items.length === 0) {
+          const future = program.filter((p) => isFutureItem(p) && isSessionCandidate(p));
+          if (future.length > 0) {
+            const earliest = Math.min(...future.map((p) => toMinutes(p).startMin));
+            items = future
+              .filter((p) => toMinutes(p).startMin === earliest)
+              .sort(roomSort);
+            isUpcoming = true;
+          }
+        }
+
+        if (title) {
+          title.textContent = isUpcoming ? "Prochainement" : "En ce moment";
+        }
+
+        if (items.length === 0) {
+          container.innerHTML = "";
+          empty.hidden = false;
+          return;
+        }
+
+        empty.hidden = true;
+
+        let html = "";
+        for (const item of items) {
+          const room = rooms.find((r) => r.id === item.roomId);
+          const startT = new Date(item.startTime).toLocaleTimeString("fr-FR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Europe/Paris",
+          });
+          const endT = new Date(item.endTime).toLocaleTimeString("fr-FR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Europe/Paris",
+          });
+          const isActive = item.roomId === activeSalle || item.roomId === "all";
+          const roomLabel = item.roomId === "all" ? "Toutes les salles" : (room ? room.name : "");
+          const roomColor = item.roomId === "all" ? "#1b1b1b" : (room ? room.color : "#555");
+
+          html += '<div class="Session-card' + (isActive ? " is-active" : "") + '">';
+          html += '<div class="Session-cardHeader">';
+          html +=
+            '<span class="Session-cardRoom" style="background:' +
+            roomColor +
+            '">' +
+            roomLabel +
+            "</span>";
+          html += '<span class="Session-cardTime">' + startT + " — " + endT + "</span>";
+          html += "</div>";
+          html += '<h2 class="Session-cardTitle">' + item.title + "</h2>";
+          if (item.speakers) {
+            html += '<p class="Session-cardSpeakers">' + item.speakers + "</p>";
+          }
+          if (item.type === "atelier") {
+            html += '<span class="Session-cardTag">Atelier</span>';
+          }
+          html += "</div>";
+        }
+        container.innerHTML = html;
+      }
+
+      // --- Slide rotation ---
+      const slides = document.querySelectorAll(".Interstice-slide");
+      const pips = document.querySelectorAll(".Interstice-pip");
+      let currentIndex = 0;
+      const INTERVAL = 10000; // 10s per slide
+
+      function formatNowTime() {
+        const total = ((getNowMinutes() % (24 * 60)) + 24 * 60) % (24 * 60);
+        const h = Math.floor(total / 60);
+        const m = total % 60;
+        return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+      }
+
+      function updateClock() {
+        const time = formatNowTime();
+        document.querySelectorAll("[data-clock]").forEach((el) => {
+          el.textContent = time;
+        });
+      }
+
+      function rerender() {
+        buildProgramme();
+        buildSession();
+        updateClock();
+      }
+
+      let prevIndex = 0;
+      function showSlide(index) {
+        rerender();
+        slides.forEach((s, i) => {
+          s.classList.toggle("is-active", i === index);
+          s.classList.toggle("is-exiting", i === prevIndex && i !== index);
+        });
+        // Drop is-exiting after the transition so the slide returns
+        // to its hidden resting state.
+        setTimeout(() => {
+          slides.forEach((s) => s.classList.remove("is-exiting"));
+        }, 400);
+        prevIndex = index;
+        pips.forEach((p, i) => p.classList.toggle("is-active", i === index));
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+      }
+
+      // Init
+      rerender();
+
+      slides.forEach((s, i) => {
+        s.classList.toggle("is-active", i === 0);
+      });
+
+      let timer = setInterval(nextSlide, INTERVAL);
+      // Safety net: re-render every 30s so a hidden slide stays fresh
+      // even if the rotation is paused.
+      setInterval(rerender, 30000);
+      // Cheap clock refresh so the footer time stays in sync with the
+      // wall clock without waiting for a full rerender.
+      setInterval(updateClock, 10000);
+
+      // Manual pip click
+      pips.forEach((pip, i) => {
+        pip.addEventListener("click", () => {
+          clearInterval(timer);
+          currentIndex = i;
+          showSlide(i);
+          timer = setInterval(nextSlide, INTERVAL);
+        });
+      });
+
+      // Keyboard controls: Arrow Left/Right to switch slides, Arrow Up/Down
+      // to shift the current time by 15 minutes (without freezing it),
+      // Space to reset that offset.
+      document.addEventListener("keydown", (e) => {
+        if (e.target instanceof HTMLElement && e.target.matches("input, textarea")) {
+          return;
+        }
+        switch (e.key) {
+          case "ArrowRight":
+            clearInterval(timer);
+            nextSlide();
+            timer = setInterval(nextSlide, INTERVAL);
+            e.preventDefault();
+            break;
+          case "ArrowLeft":
+            clearInterval(timer);
+            prevSlide();
+            timer = setInterval(nextSlide, INTERVAL);
+            e.preventDefault();
+            break;
+          case "ArrowUp":
+            timeOffsetMinutes += 15;
+            rerender();
+            e.preventDefault();
+            break;
+          case "ArrowDown":
+            timeOffsetMinutes -= 15;
+            rerender();
+            e.preventDefault();
+            break;
+          case " ":
+          case "Spacebar":
+            timeOffsetMinutes = 0;
+            rerender();
+            e.preventDefault();
+            break;
+          case "Enter": {
+            const idx = salleCycle.indexOf(activeSalle);
+            const nextIdx = idx === -1 ? 0 : (idx + 1) % salleCycle.length;
+            activeSalle = salleCycle[nextIdx];
+            rerender();
+            e.preventDefault();
+            break;
+          }
+        }
+      });
+    </script>
+
+    <style is:global>
+      /* === Base === */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        font-family: "Outfit", system-ui, sans-serif;
+        background: #000;
+        color: #fff;
+        -webkit-font-smoothing: antialiased;
+        cursor: none;
+      }
+
+      *,
+      *::before,
+      *::after {
+        cursor: none !important;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* === Stage: fixed 1920x1080 design surface, scaled to fit viewport === */
+      .Interstice-stage {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        flex-shrink: 0;
+        transform-origin: center center;
+      }
+
+      /* === Slide shell === */
+      .Interstice-slide {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        background: #f9f9f9;
+        color: #1b1b1b;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* v3: opacity + small translateY. Cheap composite work,
+         barely more expensive than a pure crossfade. */
+      .Interstice-slide {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0);
+        visibility: hidden;
+        transition:
+          opacity 350ms ease-out,
+          transform 350ms ease-out,
+          visibility 0s linear 350ms;
+      }
+
+      .Interstice-slide.is-active {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+        transition:
+          opacity 350ms ease-out,
+          transform 350ms ease-out,
+          visibility 0s linear 0s;
+      }
+
+      .Interstice-slide.is-exiting {
+        opacity: 0;
+        transform: translate3d(0, -16px, 0);
+        visibility: visible;
+        transition:
+          opacity 350ms ease-out,
+          transform 350ms ease-out;
+      }
+
+      /* === Diagonal accent === */
+      .Interstice-diagonal {
+        position: absolute;
+        inset: 0;
+        width: 45%;
+        height: 100%;
+        background: #ffdd00;
+        clip-path: polygon(0 0, 100% 0, 0 100%);
+        z-index: 0;
+      }
+
+      /* === Header === */
+      .Interstice-header {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px 64px;
+      }
+
+      .Interstice-logo {
+        display: block;
+        line-height: 0;
+      }
+
+      .Interstice-logo img {
+        display: block;
+        height: 110px;
+        width: auto;
+      }
+
+      .Interstice-meta {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: rgba(27, 27, 27, 0.5);
+      }
+
+      /* === Footer === */
+      .Interstice-footer {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        padding: 32px 64px;
+        margin-top: auto;
+      }
+
+      .Interstice-footerTime {
+        font-variant-numeric: tabular-nums;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: rgba(27, 27, 27, 0.45);
+      }
+
+      /* === Pips === */
+      .Interstice-pips {
+        position: absolute;
+        bottom: 40px;
+        left: 64px;
+        z-index: 100;
+        display: flex;
+        gap: 10px;
+      }
+
+      .Interstice-pip {
+        width: 32px;
+        height: 4px;
+        border: none;
+        border-radius: 2px;
+        background: rgba(27, 27, 27, 0.15);
+        cursor: pointer;
+      }
+
+      .Interstice-pip.is-active {
+        width: 56px;
+        background: #ffdd00;
+      }
+
+      /* === Content area === */
+      .Interstice-content {
+        position: relative;
+        z-index: 10;
+        flex: 1;
+        padding: 0 64px;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+
+      /* =========================
+         SLIDE 1: PROGRAMME
+         ========================= */
+
+      .Programme-title {
+        display: flex;
+        align-items: flex-end;
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .Programme-title h1 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+      }
+
+      .Programme-titleSlash {
+        height: 16px;
+        width: 180px;
+        background: #ffdd00;
+        transform: skewX(-12deg);
+        margin-bottom: 8px;
+      }
+
+      .Programme-grid {
+        display: flex;
+        gap: 64px;
+        flex: 1;
+        min-height: 0;
+      }
+
+      /* Main room column */
+      .Programme-main {
+        flex: 7;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+
+      .Programme-roomHeader {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .Programme-roomName {
+        font-size: 1.9rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+      }
+
+      .Programme-roomName.is-secondary {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: rgba(27, 27, 27, 0.6);
+      }
+
+      .Programme-roomLine {
+        height: 2px;
+        flex: 1;
+        background: rgba(27, 27, 27, 0.08);
+      }
+
+      .Programme-roomHeader.is-secondary .Programme-roomLine {
+        height: 1px;
+        background: rgba(27, 27, 27, 0.05);
+      }
+
+      .Programme-items {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .Programme-item {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        padding: 12px 24px;
+        border-radius: 12px;
+      }
+
+      .Programme-item.is-past {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        opacity: 0.3;
+      }
+
+      .Programme-item.is-past .Programme-itemSpeakers {
+        display: none;
+      }
+
+      .Programme-item.is-current {
+        background: #ffdd00;
+        border-radius: 12px;
+        border: 2px solid #1b1b1b;
+      }
+
+      .Programme-item.is-current .Programme-itemTime {
+        color: rgba(27, 27, 27, 0.6);
+      }
+
+      .Programme-item.is-break {
+        background: rgba(27, 27, 27, 0.04);
+        color: rgba(27, 27, 27, 0.5);
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+
+      .Programme-item.is-break .Programme-itemTitle {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 1rem;
+      }
+
+      .Programme-item.is-break .Programme-itemTime {
+        font-size: 1.2rem;
+      }
+
+      .Programme-itemTime {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: rgba(27, 27, 27, 0.35);
+        min-width: 90px;
+      }
+
+      .Programme-itemBody {
+        flex: 1;
+      }
+
+      .Programme-itemTitle {
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.25;
+      }
+
+      .Programme-itemTitle.is-secondary {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .Programme-itemSpeakers {
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(27, 27, 27, 0.5);
+        margin-top: 4px;
+      }
+
+      .Programme-itemTag {
+        font-size: 0.6rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: #1b1b1b;
+        color: #ffdd00;
+        white-space: nowrap;
+      }
+
+      .Programme-item.is-secondary {
+        padding: 12px 16px;
+        gap: 16px;
+      }
+
+      .Programme-itemTime.is-secondary {
+        font-size: 1.2rem;
+        min-width: 70px;
+        color: rgba(27, 27, 27, 0.25);
+      }
+
+      /* Secondary rooms */
+      .Programme-secondary {
+        flex: 5;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        border-left: 1px solid rgba(27, 27, 27, 0.05);
+        padding-left: 64px;
+      }
+
+      .Programme-secondaryCol {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .Programme-items.is-secondary {
+        gap: 4px;
+      }
+
+      /* =========================
+         SLIDE 2: SPONSORS
+         ========================= */
+
+      .Sponsors-content {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 48px;
+      }
+
+      .Sponsors-title {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+      }
+
+      .Sponsors-titleSlash {
+        height: 12px;
+        width: 140px;
+        background: #ffdd00;
+        transform: skewX(-12deg);
+      }
+
+      .Sponsors-tier {
+        width: 100%;
+        max-width: 1400px;
+      }
+
+      .Sponsors-tierLabel {
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        margin-bottom: 24px;
+      }
+
+      .Sponsors-tierGrid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 48px;
+      }
+
+      .Sponsors-tierItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .Sponsors-tierItem img {
+        object-fit: contain;
+        display: block;
+      }
+
+      .Sponsors-tierGrid.gold img {
+        height: 130px;
+        max-width: 340px;
+      }
+
+      .Sponsors-tierGrid.silver img {
+        height: 90px;
+        max-width: 240px;
+      }
+
+      .Sponsors-tierGrid.bronze img {
+        height: 64px;
+        max-width: 180px;
+      }
+
+      .Sponsors-tierItem span {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: rgba(27, 27, 27, 0.4);
+      }
+
+      /* =========================
+         SLIDE 3: SESSION COURANTE
+         ========================= */
+
+      .Session-content {
+        padding-top: 20px;
+      }
+
+      .Session-title {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+
+      .Session-titleSlash {
+        height: 12px;
+        width: 140px;
+        background: #ffdd00;
+        transform: skewX(-12deg);
+        margin-bottom: 56px;
+      }
+
+      .Session-cards {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+      }
+
+      .Session-card {
+        flex: 1;
+        min-width: 0;
+        background: #fff;
+        border-radius: 16px;
+        padding: 40px;
+        border: 1px solid rgba(27, 27, 27, 0.06);
+      }
+
+      .Session-card.is-active {
+        border-left: 6px solid #ffdd00;
+      }
+
+      .Session-cardHeader {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .Session-cardRoom {
+        font-size: 0.6rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding: 6px 14px;
+        border-radius: 999px;
+        color: #fff;
+      }
+
+      .Session-cardTime {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: rgba(27, 27, 27, 0.35);
+      }
+
+      .Session-cardTitle {
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.25;
+        margin-bottom: 12px;
+      }
+
+      .Session-cardSpeakers {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: rgba(27, 27, 27, 0.5);
+      }
+
+      .Session-cardTag {
+        display: inline-block;
+        margin-top: 16px;
+        font-size: 0.6rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: #1b1b1b;
+        color: #ffdd00;
+      }
+
+      .Session-empty[hidden] {
+        display: none;
+      }
+
+      .Session-empty {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .Session-empty p {
+        font-size: 2rem;
+        font-weight: 700;
+        color: rgba(27, 27, 27, 0.3);
+      }
+
+      .Session-emptyHint {
+        font-size: 1.2rem !important;
+        font-weight: 500 !important;
+        color: rgba(27, 27, 27, 0.2) !important;
+      }
+    </style>
+  </body>
+</html>

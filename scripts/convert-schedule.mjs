@@ -177,7 +177,12 @@ const QUIZ_CYBERSECURITE_SPEAKER = {
   name: "Rémy Teste",
   role: "Réserviste Cyber",
   company: "RECyM",
-  bio: "",
+  bio: [
+    "Réserviste Cyber au sein du RECyM et RSSI en Normandie, j'accompagne les entreprises pour bâtir une culture de cybersécurité forte.",
+    "Passionné par la pédagogie, j'anime des sessions de sensibilisation interactives pour former les équipes aux bons réflexes face aux cybermenaces.",
+    "Mon objectif : rendre la cybersécurité accessible et transformer chaque collaborateur en premier rempart de l'entreprise.",
+    "L'OFAC déploie sur tout le territoire national le RECyM, un réseau d'experts en cybersécurité composé de professionnels du numérique et de policiers. Ce service public et gratuit sensibilise les entreprises, les clubs d'entreprise, les filières professionnelles, les entités publiques et les associations aux cybermenaces.",
+  ].join("\n\n"),
 };
 
 // Fixed program entry not present in the imported schedule.

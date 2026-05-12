@@ -187,4 +187,5 @@
 .Modal-speakerBio {
   font-size: var(--text-sm);
   margin-top: var(--space-xs);
+  white-space: pre-wrap;
 }

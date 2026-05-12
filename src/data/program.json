@@ -83,7 +83,7 @@
     "description": "",
     "speakerIds": [],
     "startTime": "2026-06-09T10:45:00.000+02:00",
-    "endTime": "2026-06-09T11:10:00.000+02:00",
+    "endTime": "2026-06-09T11:15:00.000+02:00",
     "roomId": "all",
     "theme": "Networking",
     "level": "débutant",
@@ -97,8 +97,8 @@
       "romuald-poretti",
       "kevin-guerin"
     ],
-    "startTime": "2026-06-09T11:10:00.000+02:00",
-    "endTime": "2026-06-09T11:55:00.000+02:00",
+    "startTime": "2026-06-09T11:15:00.000+02:00",
+    "endTime": "2026-06-09T12:00:00.000+02:00",
     "roomId": "auditorium",
     "theme": "IA, Data & Automatisation",
     "level": "intermédiaire",
@@ -263,20 +263,6 @@
     "type": "conférence"
   },
   {
-    "id": "l-ia-fait-le-boulot-reste-a-savoir-lequel",
-    "title": "L'IA fait le boulot. Reste à savoir lequel.",
-    "description": "<p>Il y a encore quelques mois, l&#39;IA pondait des écrans génériques, dignes d&#39;un kit UI gratuit… et moche. Pour obtenir ce chef-d&#39;œuvre, il fallait rédiger un prompt plus long que l&#39;odyssée. Autant dire qu&#39;on était plus proche du &quot;cousin qui fait du design&quot; que de l&#39;équipe d&#39;Apple au bout du clavier.</p>\n<p>Sauf que ça, c&#39;était avant. Aujourd&#39;hui, entre les agents IA et le design conversationnel, on peut prototyper à la voix, itérer en temps réel, et aller dix fois plus loin qu&#39;avant. L&#39;outil est devenu redoutable. Mais un outil redoutable sans quelqu&#39;un qui sait où il va, ça reste un canon qui tire dans tous les sens.</p>\n<p>Mon rêve en tant qu&#39;UX designer n&#39;a jamais été de pousser des pixels. Ce qui m&#39;anime, c&#39;est de résoudre de vrais problèmes pour de vrais utilisateurs, avec leurs contraintes bien concrètes. Et ça, aucun agent ne le fait à votre place.</p>\n<p>Cette conférence, c&#39;est un retour d&#39;expérience sans filtre après 15 ans en design et dev front. Ce que l&#39;IA change vraiment dans le process, pourquoi on a plus que jamais besoin d&#39;un capitaine dans le navire… et pourquoi les designers ont encore une sacrée carte à jouer. Au moins jusqu&#39;à la prochaine mise à jour.</p>",
-    "speakerIds": [
-      "ivan-dalmet"
-    ],
-    "startTime": "2026-06-09T17:00:00.000+02:00",
-    "endTime": "2026-06-09T17:45:00.000+02:00",
-    "roomId": "auditorium",
-    "theme": "UX / UI & Design Produit",
-    "level": "débutant",
-    "type": "conférence"
-  },
-  {
     "id": "the-blind-designer-construire-des-produits-pour-airbnb-uber-ou-younited-en-perdant-progressivement-la-vue",
     "title": "The Blind Designer — Construire des produits pour Airbnb, Uber ou Younited en perdant progressivement la vue",
     "description": "<p>À 15 ans, j’apprends que je suis atteint de rétinite pigmentaire. Une maladie dégénérative qui me fera perdre progressivement la vue.</p>\n<p>À 35 ans, j’ai perdu environ 50 % de ma vision.</p>\n<p>Entre ces deux moments, j’ai pourtant construit ma carrière dans l’un des métiers les plus visuels qui soient : le design produit.</p>\n<p>J’ai travaillé avec certaines des startups les plus influentes (Airbnb, Uber, Deliveroo, WeWork), participé à l’hyper-croissance de Meero (de 4 à 1500 employés) et aidé plus de 30 startups à passer le cap critique du 0 → 1.</p>\n<p>Dans ce talk, je partage ce que concevoir des produits en étant malvoyant m’a appris sur le design, les organisations et la créativité.</p>\n<p>Comment transformer une contrainte extrême en avantage. Pourquoi le design est un levier stratégique pour les entreprises. Et comment l’IA est en train de redéfinir ce que signifie vraiment « concevoir ».</p>\n<p>Un retour d’expérience honnête sur 20 ans de design dans des environnements à très forte pression, entre intuition, systèmes imparfaits et méthodes parfois… assez atypiques.</p>",
@@ -285,9 +271,23 @@
     ],
     "startTime": "2026-06-09T17:00:00.000+02:00",
     "endTime": "2026-06-09T17:45:00.000+02:00",
-    "roomId": "conference",
+    "roomId": "auditorium",
     "theme": "UX / UI & Design Produit",
     "level": "intermédiaire",
+    "type": "conférence"
+  },
+  {
+    "id": "l-ia-fait-le-boulot-reste-a-savoir-lequel",
+    "title": "L'IA fait le boulot. Reste à savoir lequel.",
+    "description": "<p>Il y a encore quelques mois, l&#39;IA pondait des écrans génériques, dignes d&#39;un kit UI gratuit… et moche. Pour obtenir ce chef-d&#39;œuvre, il fallait rédiger un prompt plus long que l&#39;odyssée. Autant dire qu&#39;on était plus proche du &quot;cousin qui fait du design&quot; que de l&#39;équipe d&#39;Apple au bout du clavier.</p>\n<p>Sauf que ça, c&#39;était avant. Aujourd&#39;hui, entre les agents IA et le design conversationnel, on peut prototyper à la voix, itérer en temps réel, et aller dix fois plus loin qu&#39;avant. L&#39;outil est devenu redoutable. Mais un outil redoutable sans quelqu&#39;un qui sait où il va, ça reste un canon qui tire dans tous les sens.</p>\n<p>Mon rêve en tant qu&#39;UX designer n&#39;a jamais été de pousser des pixels. Ce qui m&#39;anime, c&#39;est de résoudre de vrais problèmes pour de vrais utilisateurs, avec leurs contraintes bien concrètes. Et ça, aucun agent ne le fait à votre place.</p>\n<p>Cette conférence, c&#39;est un retour d&#39;expérience sans filtre après 15 ans en design et dev front. Ce que l&#39;IA change vraiment dans le process, pourquoi on a plus que jamais besoin d&#39;un capitaine dans le navire… et pourquoi les designers ont encore une sacrée carte à jouer. Au moins jusqu&#39;à la prochaine mise à jour.</p>",
+    "speakerIds": [
+      "ivan-dalmet"
+    ],
+    "startTime": "2026-06-09T17:00:00.000+02:00",
+    "endTime": "2026-06-09T17:45:00.000+02:00",
+    "roomId": "conference",
+    "theme": "UX / UI & Design Produit",
+    "level": "débutant",
     "type": "conférence"
   },
   {

@@ -8,6 +8,14 @@
     "photo": "/images/speakers/emmanuel-assie.jpg"
   },
   {
+    "id": "francois-nikolenko",
+    "name": "François Nikolenko",
+    "role": "",
+    "company": "Yeita",
+    "bio": "François Nikolenko est diplômé de L'École de design Nantes Atlantique (option interaction design UX/UI, 2012-2013), après une formation initiale à l'ESRA en réalisation cinématographique (2009-2010). Il cumule plus de 14 ans d'expérience à l'intersection du Product Management, du Design et du Product Marketing. Côté parcours, il a démarré comme advisor pour Tropee (2021-2022) et Blast Club (2022-2023), puis a co-fondé Unicraft VC où il occupait le poste de Head of Product (2021-2023), pilotant le portefeuille produit et l'équipe pluridisciplinaire (PM, PMM, designers, développeurs) ainsi que la stratégie produit, le positionnement et la plateforme de marque. Il a ensuite rejoint Younited comme Head of Product & Brand Design (2023-2024), où il a notamment piloté le lancement mondial de l'application Younited (300k téléchargements, note de 4,8). Depuis novembre 2024, il est CPO et co-fondateur de Yeita PMM, la branche Product Marketing du collectif Yeita, basée à Paris.",
+    "photo": "/images/speakers/francois-nikolenko.png"
+  },
+  {
     "id": "christophe-rosenberger",
     "name": "Christophe Rosenberger",
     "role": "",
@@ -22,14 +30,6 @@
     "company": "Market Pay Financial Institutions",
     "bio": "Jasmine Chaid Akacem, ingénieure backend depuis 3 ans à Market Pay Financial Institutions (anciennement Dejamobile). J'ai intégré l'entreprise suite à un stage de fin d'études pour réaliser des tests de performance sur le backend de notre produit d'acquisition. Ensuite, j'ai rapidement été orienté vers des problèmes de monitoring de la solution, en plus de mes tâches de développement et ma participation à la sécurité de l'applicatif. Aujourd'hui, je suis responsable de la solution de monitoring de notre produit d'acquisition, après moult travaux sur le sujet réalisés par mes soins.",
     "photo": "/images/speakers/jasmine-c.jpg"
-  },
-  {
-    "id": "francois-nikolenko",
-    "name": "François Nikolenko",
-    "role": "",
-    "company": "Yeita",
-    "bio": "François Nikolenko est diplômé de L'École de design Nantes Atlantique (option interaction design UX/UI, 2012-2013), après une formation initiale à l'ESRA en réalisation cinématographique (2009-2010). Il cumule plus de 14 ans d'expérience à l'intersection du Product Management, du Design et du Product Marketing. Côté parcours, il a démarré comme advisor pour Tropee (2021-2022) et Blast Club (2022-2023), puis a co-fondé Unicraft VC où il occupait le poste de Head of Product (2021-2023), pilotant le portefeuille produit et l'équipe pluridisciplinaire (PM, PMM, designers, développeurs) ainsi que la stratégie produit, le positionnement et la plateforme de marque. Il a ensuite rejoint Younited comme Head of Product & Brand Design (2023-2024), où il a notamment piloté le lancement mondial de l'application Younited (300k téléchargements, note de 4,8). Depuis novembre 2024, il est CPO et co-fondateur de Yeita PMM, la branche Product Marketing du collectif Yeita, basée à Paris.",
-    "photo": "/images/speakers/francois-nikolenko.png"
   },
   {
     "id": "ivan-dalmet",
